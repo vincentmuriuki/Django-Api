@@ -34,3 +34,9 @@ class ArticleView(APIView):
             article_saved = serializer.save()
             
         return Response({"success": "Article '{}' updated successfully".format(article_saved.title)})
+
+    def delete(self, request, pk):
+        # get the object with this pk
+        article = get_object_or_404(Article.objects.all(), pk=pk)
+        article.delete()
+        return Response({"message": "Article with id '{}' has been deleted.".format(pk)}, status=204)
