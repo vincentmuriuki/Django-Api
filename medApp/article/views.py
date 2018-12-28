@@ -24,3 +24,13 @@ class ArticleView(APIView):
             article_saved = serializer.save()
 
         return Response({"success": "Article '{}' created successfully".format(article_saved.title)})
+
+
+    def put(self, request, pk):
+        saved_article = get_object_or_404(Article.objects.all(), pk=pk)
+        data = request.data.get('article')
+        serializer = ArticleSerializer(instance=saved_article, data=data, partial=True
+        if serializer.is_valid(raise_exception=True):
+            article_saved = serializer.save()
+            
+        return Response({"success": "Article '{}' updated successfully".format(article_saved.title)})
